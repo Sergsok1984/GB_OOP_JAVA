@@ -1,41 +1,38 @@
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<BaseHero> heroes = new ArrayList<>();
-        getHeroes(heroes, 50);
-        chooseHero(heroes, "Sniper");
+        ArrayList<BaseHero> heroesTeamOne = new ArrayList<>();
+        ArrayList<BaseHero> heroesTeamTwo = new ArrayList<>();
+        getHeroes(heroesTeamOne, 10, 1);
+        getHeroes(heroesTeamTwo, 10, 2);
+        heroesTeamOne.forEach(n -> System.out.print(n.getInfo() + ", "));
+        heroesTeamOne.forEach(n -> n.step(heroesTeamOne, n));
     }
 
-    private static void getHeroes(ArrayList<BaseHero> heroesList, int count) {
+    private static void getHeroes(ArrayList<BaseHero> heroesList, int count, int mode) {
         var random = new SecureRandom();
-        var listNames = List.of("Андрей", "Сергей", "Петр", "Александр", "Алексей",
-                "Игорь", "Валентин", "Владимир", "Артем", "Роман", "Илья", "Игорь", "Денис", "Иван", "Константин");
 
         for (int i = 0; i < count; i++) {
-            var randomName = listNames.get(random.nextInt(listNames.size()));
-            switch (random.nextInt(7)) {
-                case 0 -> heroesList.add(new Crossbowman(randomName));
-                case 1 -> heroesList.add(new Farmer(randomName));
-                case 2 -> heroesList.add(new Mage(randomName));
-                case 3 -> heroesList.add(new Monk(randomName));
-                case 4 -> heroesList.add(new Rogue(randomName));
-                case 5 -> heroesList.add(new Sniper(randomName));
-                case 6 -> heroesList.add(new Spearman(randomName));
-            }
+            var name = "Player_" + (i + 1);
+            if (mode == 1) {
+                switch (random.nextInt(4)) {
+                    case 0 -> heroesList.add(new Farmer(name));
+                    case 1 -> heroesList.add(new Rogue(name));
+                    case 2 -> heroesList.add(new Sniper(name));
+                    case 3 -> heroesList.add(new Mage(name));
+                }
 
-        }
-        System.out.println("Список всех персонажей:" + heroesList.toString().replaceAll("^\\[|]$", ""));
-    }
-
-    private static void chooseHero(ArrayList<BaseHero> heroesList, String role) {
-        System.out.printf("Список персонажей %s:", role);
-        for (BaseHero hero : heroesList) {
-            if (hero.toString().contains(role)) {
-                System.out.print(hero);
+            } else {
+                switch (random.nextInt(4)) {
+                    case 0 -> heroesList.add(new Crossbowman(name));
+                    case 1 -> heroesList.add(new Monk(name));
+                    case 2 -> heroesList.add(new Spearman(name));
+                    case 3 -> heroesList.add(new Farmer(name));
+                }
             }
         }
     }
 }
+
