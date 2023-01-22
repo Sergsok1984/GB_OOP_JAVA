@@ -1,9 +1,12 @@
+package units;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public abstract class BaseHero implements Behavior {
-    protected String name, role;
+public abstract class BaseHero implements Behavior, Comparable<BaseHero> {
+    public String role;
+    protected String name;
     protected int attack, defence, health, maxHealth, speed;
     protected int[] damage;
 
@@ -20,18 +23,26 @@ public abstract class BaseHero implements Behavior {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> heroList, BaseHero hero) {
-
-    }
+    public void step(ArrayList<BaseHero> heroList) {}
 
     @Override
     public String getInfo() {
-        return role + " " + (health * 100 / maxHealth) + " " + "%";
+        return name + " " + role + " " + (health * 100 / maxHealth) + " " + "%";
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
         return "Name: " + name + ", Role: " + role + ", Attack: " + attack + ", Defence: " + defence + ", Damage: " + Arrays.toString(damage) + ", Health: " + health + ", Speed: " + speed;
     }
+
+    @Override
+    public int compareTo(BaseHero hero) {return (hero.getClass().equals(Farmer.class)) ? - 1 : 0;}
 }
