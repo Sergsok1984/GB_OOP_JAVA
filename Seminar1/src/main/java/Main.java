@@ -1,56 +1,54 @@
-import units.*;
-
-import java.security.SecureRandom;
+import chars.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    public static final int GANG_SIZE = 10;
+    public static ArrayList<UnitBase> whiteSide;
+    public static ArrayList<UnitBase> darkSide;
 
         public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<BaseHero> heroesTeamOne = new ArrayList<>();
-        ArrayList<BaseHero> heroesTeamTwo = new ArrayList<>();
-        getHeroes(heroesTeamOne, 10, 1);
-//        getHeroes(heroesTeamTwo, 10, 2);
-        while (true) {
-            System.out.println();
-            System.out.println("Баланс здоровья игроков:");
-            heroesTeamOne.forEach(n -> System.out.println(n.getInfo() + ", "));
-            System.out.println();
-            heroesTeamOne.forEach(n -> n.step(heroesTeamOne));
-            scanner.nextLine();
-        }
-    }
+            init();
 
-    private static void getHeroes(ArrayList<BaseHero> heroesList, int count, int mode) {
-        var random = new SecureRandom();
-        if (mode == 1) {
-            System.out.println("Состав первой команды:");
-            for (int i = 0; i < count; i++) {
-                var name = "Player_" + (i + 1);
-                switch (random.nextInt(4)) {
-                    case 0 -> heroesList.add(new Farmer(name));
-                    case 1 -> heroesList.add(new Rogue(name));
-                    case 2 -> heroesList.add(new Sniper(name));
-                    case 3 -> heroesList.add(new Mage(name));
-                }
-            }
-        } else {
-            System.out.println("Состав второй команды:");
-            for (int i = 0; i < count; i++) {
-                var name = "Player_" + (i + 11);
-                switch (random.nextInt(4)) {
-                    case 0 -> heroesList.add(new Crossbowman(name));
-                    case 1 -> heroesList.add(new Monk(name));
-                    case 2 -> heroesList.add(new Spearman(name));
-                    case 3 -> heroesList.add(new Farmer(name));
-                }
+            Scanner scanner = new Scanner(System.in);
+            while (true){
+                ConsoleView.view();
+                whiteSide.forEach(n -> n.step(darkSide));
+                darkSide.forEach(n -> n.step(whiteSide));
+                scanner.nextLine();
             }
         }
-        Collections.sort(heroesList);
-        for (BaseHero o : heroesList)
-            System.out.println(o);
+
+    private static void init() {
+        whiteSide = new ArrayList<>();
+        darkSide = new ArrayList<>();
+
+        int x = 1;
+        int y = 1;
+        for (int i = 0; i < GANG_SIZE; i++) {
+            switch (new Random().nextInt(4)) {
+                case 0 -> whiteSide.add(new Farmer(whiteSide, x, y++));
+                case 1 -> whiteSide.add(new Rogue(whiteSide, x, y++));
+                case 2 -> whiteSide.add(new Sniper(whiteSide, x, y++));
+                default -> whiteSide.add(new Monk(whiteSide, x, y++));
+            }
+        }
+        Collections.sort(whiteSide);
+
+        x = GANG_SIZE;
+        y = 1;
+        for (int i = 0; i < GANG_SIZE; i++) {
+
+            switch (new Random().nextInt(4)) {
+                case 0 -> darkSide.add(new Farmer(darkSide, x, y++));
+                case 1 -> darkSide.add(new Spearman(darkSide, x, y++));
+                case 2 -> darkSide.add(new Crossbowman(darkSide, x, y++));
+                default -> darkSide.add(new Mage(darkSide, x, y++));
+            }
+        }
+        Collections.sort(darkSide);
     }
 }
 
