@@ -1,22 +1,23 @@
 package chars;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
     protected String role;
+    protected ArrayList<UnitBase> gang;
 
 
-    //    protected String name;
+    protected String name;
     protected int attack, defence, health, maxHealth, speed;
     protected int[] damage;
     protected Vector2 position;
 
-    public UnitBase(String role, int attack, int defence, int[] damage, int health, int speed, int x, int y) {
+    public UnitBase(ArrayList<UnitBase> gang, String name, String role, int attack, int defence, int[] damage, int health, int speed, int x, int y) {
 
-
-        this.position = new Vector2(x, y);
-//        this.name = name;
+        this.gang = gang;
+        this.name = name;
         this.role = role;
         this.attack = attack;
         this.defence = defence;
@@ -24,6 +25,8 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
         this.maxHealth = health;
         this.health = maxHealth - new Random().nextInt(maxHealth);
         this.speed = speed;
+        this.position = new Vector2(x, y);
+
 
     }
 
@@ -32,28 +35,33 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
     }
 
     @Override
-    public String getHealthInfo() {
-        return role + " " + (health * 100 / maxHealth) + " " + "%";
+    public int getHealthInfo() {
+        return health * 100 / maxHealth;
     }
 
     public String getRole() {
         return role;
     }
 
-//    public String getName() {
-//        return name;
-//    }
+    public String getName() {
+        return name;
+    }
 
     public Vector2 getPosition() {
         return position;
     }
 
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
     //    @Override
-//    public String toString() {
-//        return "Name: " + name + ", Role: " + role + ", Attack: " + attack + ", Defence: " + defence + ", Damage: " + Arrays.toString(damage) + ", Health: " + health + ", Speed: " + speed;
-//    }
+    public String toString() {
+        return "Name: " + ", Role: " + role + ", Attack: " + attack + ", Defence: " + defence + ", Damage: " + Arrays.toString(damage) + ", Health: " + health + ", Speed: " + speed;
+    }
+
     public String getInfo() {
-        return String.format("⚔ %d\t\uD83D\uDEE1 %d\t♥%d\t☠%d\t\uD83C\uDFC3%d", attack, defence, health, (damage[0] + damage[1]) / 2, speed);
+        return String.format("⚔%3d\t\uD83D\uDEE1%3d\t♥%3d\t☠%3d\t\uD83C\uDFC3%3d\t", attack, defence, health, (damage[0] + damage[1]) / 2, speed);
 
     }
 

@@ -7,7 +7,7 @@ public interface Behavior {
 
     String getInfo();
 
-    String getHealthInfo();
+    int getHealthInfo();
 }
 
 

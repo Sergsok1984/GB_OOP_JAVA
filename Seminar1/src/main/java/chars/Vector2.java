@@ -1,13 +1,14 @@
 package chars;
 
 public class Vector2 {
-    int x,y;
+    int x, y;
 
-    public Vector2(int x, int y){
+    public Vector2(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    public boolean isEquals(Vector2 opposit){
+
+    public boolean isEquals(Vector2 opposit) {
         return opposit.y == y && opposit.x == x;
     }
 }
