@@ -2,7 +2,6 @@ package chars;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
     protected String role;
@@ -23,7 +22,7 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
         this.defence = defence;
         this.damage = damage;
         this.maxHealth = health;
-        this.health = maxHealth - new Random().nextInt(maxHealth);
+        this.health = maxHealth;
         this.speed = speed;
         this.position = new Vector2(x, y);
 
@@ -65,6 +64,18 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
 
     }
 
+    protected void getDamage(float attackPower){
+        this.health -= attackPower;
+        if (this.health < 0){
+            this.health = 0;
+        } else if (this.health > maxHealth){
+            this.health = maxHealth;
+        }
+    }
+
+    public float getHeroHealth(){
+        return health;
+    }
     @Override
     public int compareTo(UnitBase hero) {
         return (hero.getClass().equals(Farmer.class)) ? -1 : 0;

@@ -11,4 +11,9 @@ public class Vector2 {
     public boolean isEquals(Vector2 opposit) {
         return opposit.y == y && opposit.x == x;
     }
+    public float getDistance(float x, float y) {
+        float dx = x - this.x;
+        float dy = y - this.y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
 }

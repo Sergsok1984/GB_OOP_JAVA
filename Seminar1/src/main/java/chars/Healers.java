@@ -17,9 +17,16 @@ public class Healers extends UnitBase {
 
     @Override
     public void step(ArrayList<UnitBase> heroesList) {
+        if (health == 0) {
+            return;
+        }
         int minHealth = 100;
         int minIndex = 0;
         for (int i = 0; i < gang.size(); i++) {
+            if (gang.get(i).getHealthInfo() == 0)
+            {
+                continue;
+            }
             if (gang.get(i).getHealthInfo() < 100) {
                 int temp = gang.get(i).getHealthInfo();
                 if (temp < minHealth) {

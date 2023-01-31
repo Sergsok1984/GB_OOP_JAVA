@@ -1,3 +1,4 @@
+import chars.UnitBase;
 import chars.Vector2;
 
 import java.util.Collections;
@@ -61,8 +62,8 @@ public class ConsoleView {
         for (int i = 0; i < Main.GANG_SIZE; i++) {
             if (Main.darkSide.get(i).getPosition().isEquals(position)) {
                 str = "|" + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getRole().charAt(0) + AnsiColors.ANSI_RESET + "|"
-                        + " ".repeat(3) + AnsiColors.ANSI_GREEN + Main.whiteSide.get(i).getInfo() + AnsiColors.ANSI_RESET
-                        + " ".repeat(7) + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getInfo() + AnsiColors.ANSI_RESET;
+                        + " ".repeat(3) + getColor(Main.whiteSide.get(i), 1) + Main.whiteSide.get(i).getInfo() + AnsiColors.ANSI_RESET
+                        + " ".repeat(4) + getColor(Main.darkSide.get(i), 2) + Main.darkSide.get(i).getInfo() + AnsiColors.ANSI_RESET;
             }
 
             if (Main.whiteSide.get(i).getPosition().isEquals(position)) {
@@ -70,6 +71,23 @@ public class ConsoleView {
             }
         }
         return str;
+    }
+    private static String getColor(UnitBase hero, int gang) {
+        switch (gang) {
+            case 1 -> {
+                if (hero.getHeroHealth() == 0) {
+                    return AnsiColors.ANSI_RED;
+                } else
+                    return AnsiColors.ANSI_GREEN;
+            }
+            case 2 -> {
+                if (hero.getHeroHealth() == 0) {
+                    return AnsiColors.ANSI_RED;
+                } else
+                    return AnsiColors.ANSI_BLUE;
+            }
+        }
+        return AnsiColors.ANSI_PURPUR;
     }
 
 
