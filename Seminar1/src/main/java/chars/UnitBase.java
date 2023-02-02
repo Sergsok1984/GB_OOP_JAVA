@@ -25,8 +25,6 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
         this.health = maxHealth;
         this.speed = speed;
         this.position = new Vector2(x, y);
-
-
     }
 
     @Override
@@ -38,25 +36,26 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
         return health * 100 / maxHealth;
     }
 
-    public String getRole() {
+    public String getName() {
         return role;
     }
 
-    public String getName() {
-        return name;
+    public void setPos(Vector2 position) {
+        this.position = position;
     }
 
     public Vector2 getPosition() {
         return position;
     }
 
-    public void setPosition(Vector2 position) {
-        this.position = position;
+    public void setPosition(int x, int y) {
+        this.position = new Vector2(x, y);
     }
+
 
     //    @Override
     public String toString() {
-        return "Name: " + ", Role: " + role + ", Attack: " + attack + ", Defence: " + defence + ", Damage: " + Arrays.toString(damage) + ", Health: " + health + ", Speed: " + speed;
+        return "Name: " + name + ", Role: " + role + ", Attack: " + attack + ", Defence: " + defence + ", Damage: " + Arrays.toString(damage) + ", Health: " + health + ", Speed: " + speed;
     }
 
     public String getInfo() {
@@ -64,18 +63,32 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
 
     }
 
-    protected void getDamage(float attackPower){
+    protected void getDamage(float attackPower) {
         this.health -= attackPower;
-        if (this.health < 0){
+        if (this.health < 0) {
             this.health = 0;
-        } else if (this.health > maxHealth){
+        } else if (this.health > maxHealth) {
             this.health = maxHealth;
         }
     }
 
-    public float getHeroHealth(){
+    protected Vector2 getTarget(ArrayList<UnitBase> heroesList) {
+        float minDistance = 100;
+        int minIndex = 0;
+        for (int i = 0; i < heroesList.size(); i++) {
+            float temp = getPosition().getDistance(heroesList.get(0).getPosition().x, heroesList.get(0).getPosition().y);
+            if (temp < minDistance && heroesList.get(i).health > 0) {
+                minDistance = temp;
+                minIndex = i;
+            }
+        }
+        return new Vector2((int) minDistance, minIndex);
+    }
+
+    public float getHeroHealth() {
         return health;
     }
+
     @Override
     public int compareTo(UnitBase hero) {
         return (hero.getClass().equals(Farmer.class)) ? -1 : 0;

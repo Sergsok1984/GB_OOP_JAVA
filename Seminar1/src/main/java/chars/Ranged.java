@@ -30,7 +30,7 @@ public class Ranged extends UnitBase {
 
         boolean doShoot = true;
         for (UnitBase unitBase : gang) {
-            if (unitBase.getRole().equals("Farmer")) {
+            if (unitBase.getName().equals("Farmer")) {
                 if (((Farmer) unitBase).supply) {
                     heroesList.get(target.y).getDamage(attackPower);
                     ((Farmer) unitBase).supply = false;
@@ -47,19 +47,6 @@ public class Ranged extends UnitBase {
     }
 
 
-    private Vector2 getTarget(ArrayList<UnitBase> heroesList) {
-        float minDistance = 100;
-        int minIndex = 0;
-        for (int i = 0; i < heroesList.size(); i++) {
-            float temp = getPosition().getDistance(heroesList.get(0).getPosition().x, heroesList.get(0).getPosition().y);
-            if (temp < minDistance && heroesList.get(i).health > 0) {
-                minDistance = temp;
-                minIndex = i;
-            }
-
-        }
-        return new Vector2((int) minDistance, minIndex);
-    }
     @Override
     public String toString() {
         return super.toString() + ", Shoots: " + shoots;

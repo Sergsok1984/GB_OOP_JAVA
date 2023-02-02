@@ -40,7 +40,7 @@ public class Main {
         y = 1;
         Collections.sort(whiteSide);
         for (UnitBase o : whiteSide) {
-            o.setPosition(new Vector2(x, y++));
+            o.setPos(new Vector2(x, y++));
         }
 
 
@@ -58,7 +58,7 @@ public class Main {
         y = 1;
         Collections.sort(darkSide);
         for (UnitBase o : darkSide) {
-            o.setPosition(new Vector2(x, y++));
+            o.setPos(new Vector2(x, y++));
         }
     }
 }
