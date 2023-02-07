@@ -54,7 +54,7 @@ public class ConsoleView {
         boolean alive = false;
         for (int i = 0; i < Main.GANG_SIZE; i++) {
             if (Main.whiteSide.get(i).getPosition().isEquals(position)) {
-                if (Main.whiteSide.get(i).getHeroHealth() == 0)
+                if (Main.whiteSide.get(i).getHP() == 0)
                     str = "|" + AnsiColors.ANSI_RED + Main.whiteSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
                 else {
                     str = "|" + AnsiColors.ANSI_GREEN + Main.whiteSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
@@ -62,7 +62,7 @@ public class ConsoleView {
                 }
             }
             if (Main.darkSide.get(i).getPosition().isEquals(position) && !alive) {
-                if (Main.darkSide.get(i).getHeroHealth() == 0)
+                if (Main.darkSide.get(i).getHP() == 0)
                     str = "|" + AnsiColors.ANSI_RED + Main.darkSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
                 else
                     str = "|" + AnsiColors.ANSI_BLUE + Main.darkSide.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
@@ -74,10 +74,10 @@ public class ConsoleView {
     private static String PrintInfo(int npcIndex) {
         String str = "";
 
-        if (Main.whiteSide.get(npcIndex).getHeroHealth() == 0)
+        if (Main.whiteSide.get(npcIndex).getHP() == 0)
             str += "     " + AnsiColors.ANSI_RED + Main.whiteSide.get(npcIndex).getInfo() + AnsiColors.ANSI_RESET;
         else str += "     " + AnsiColors.ANSI_BLUE + Main.whiteSide.get(npcIndex).getInfo() + AnsiColors.ANSI_RESET;
-        if (Main.darkSide.get(npcIndex).getHeroHealth() == 0)
+        if (Main.darkSide.get(npcIndex).getHP() == 0)
             str += "     " + AnsiColors.ANSI_RED + Main.darkSide.get(npcIndex).getInfo() + AnsiColors.ANSI_RESET;
         else str += "     " + AnsiColors.ANSI_GREEN + Main.darkSide.get(npcIndex).getInfo() + AnsiColors.ANSI_RESET;
 

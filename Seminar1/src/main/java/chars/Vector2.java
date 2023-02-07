@@ -9,8 +9,7 @@ public class Vector2 {
     }
 
     public boolean isEquals(Vector2 opposit) {
-        if (opposit.y == y && opposit.x == x) return true;
-        return false;
+        return opposit.y == y && opposit.x == x;
     }
 
       public float getDistance(float x, float y) {

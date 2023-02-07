@@ -1,18 +1,20 @@
 import chars.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static final int GANG_SIZE = 10;
     public static ArrayList<UnitBase> whiteSide;
     public static ArrayList<UnitBase> darkSide;
+    public static ArrayList<UnitBase> sortList;
 
     public static void main(String[] args) {
         init();
+        sortList = new ArrayList<>();
+        sortList.addAll(darkSide);
+        sortList.addAll(whiteSide);
 
+        sortList.sort(Comparator.comparing(UnitBase::getSpeed, Comparator.reverseOrder()));
         Scanner scanner = new Scanner(System.in);
         while (true) {
             ConsoleView.view();

@@ -1,6 +1,8 @@
 package chars;
 
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Healers extends UnitBase {
     int mana;
@@ -17,28 +19,26 @@ public class Healers extends UnitBase {
 
     @Override
     public void step(ArrayList<UnitBase> heroesList) {
-        if (health == 0) {
-            return;
-        }
-        int minHealth = 100;
-        int minIndex = 0;
-        for (int i = 0; i < gang.size(); i++) {
-            if (gang.get(i).getHealthInfo() == 0)
-            {
-                continue;
+        int index = getIndexMinHealth(gang);
+        if (gang.get(index).health == 0) {
+            switch (new Random().nextInt(4)) {
+                case (0) ->
+                        gang.set(index, new Mage(gang, getName(), gang.get(index).position.x, gang.get(index).position.y));
+                case (1) ->
+                        gang.set(index, new Rogue(gang, getName(), gang.get(index).position.x, gang.get(index).position.y));
+                case (2) ->
+                        gang.set(index, new Farmer(gang, getName(), gang.get(index).position.x, gang.get(index).position.y));
+                case (3) ->
+                        gang.set(index, new Sniper(gang, getName(), gang.get(index).position.x, gang.get(index).position.y));
             }
-            if (gang.get(i).getHealthInfo() < 100) {
-                int temp = gang.get(i).getHealthInfo();
-                if (temp < minHealth) {
-                    minHealth = temp;
-                    minIndex = i;
-                }
-            }
+
         }
-        if ((gang.get(minIndex).health - damage[0]) > gang.get(minIndex).maxHealth) {
-            gang.get(minIndex).health = gang.get(minIndex).maxHealth;
+
+        if ((gang.get(index).health - damage[0]) > gang.get(index).maxHealth) {
+            gang.get(index).health = gang.get(index).maxHealth;
         } else {
-            gang.get(minIndex).health -= damage[0];
+            gang.get(index).health -= damage[0];
         }
     }
 }
+

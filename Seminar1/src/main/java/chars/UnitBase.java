@@ -2,6 +2,7 @@ package chars;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
     protected String role;
@@ -12,6 +13,7 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
     protected int attack, defence, health, maxHealth, speed;
     protected int[] damage;
     protected Vector2 position;
+
 
     public UnitBase(ArrayList<UnitBase> gang, String name, String role, int attack, int defence, int[] damage, int health, int speed, int x, int y) {
 
@@ -31,6 +33,9 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
     public void step(ArrayList<UnitBase> heroesList) {
     }
 
+    public int getHP(){
+        return health;
+    }
     @Override
     public int getHealthInfo() {
         return health * 100 / maxHealth;
@@ -85,12 +90,40 @@ public abstract class UnitBase implements Behavior, Comparable<UnitBase> {
         return new Vector2((int) minDistance, minIndex);
     }
 
-    public float getHeroHealth() {
-        return health;
+    public int getSpeed() {
+        return speed;
     }
+
+    public void getFastPlayer(ArrayList<UnitBase> heroesList) {
+        int max = 0;
+        int index = 0;
+        for (int i = 0; i < heroesList.size(); i++) {
+            if (max < heroesList.get(i).speed) {
+                max = heroesList.get(i).speed;
+                index = i;
+            }
+        }
+    }
+
+
+
 
     @Override
     public int compareTo(UnitBase hero) {
         return (hero.getClass().equals(Farmer.class)) ? -1 : 0;
     }
+
+    public int getIndexMinHealth(ArrayList<UnitBase> heroesList) {
+        float max = 101;
+        int index = -1;
+        for (int i = 0; i < heroesList.size(); i++) {
+            if (heroesList.get(i).getHP() < max) {
+                max = heroesList.get(i).getHP();
+                index = i;
+            }
+
+        }
+        return index;
+    }
 }
+
